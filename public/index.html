@@ -7,29 +7,41 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <div id="active-card">
+<!--    <div id="active-card">
         <div class="profile-pic">
             <img src="concrete_seamless.png" />
         </div>
         <div class="profile-info">
-            <span>name, age</span>
+            <span id="c-x"></span>
+            <span id="c-y"></span>
         </div>
-    </div>
-<!--    <div id="content" ng-app="cardsApp">
-        <div id="card-stack" ng-controller="cardsCtrl" ng-init="">
-            <div id="front-card" class="col-md-4 col-md-offset-4 card">
-                <span id="log">{{pos.x}}</span>
-                <div class="profile-pic">
-                    &lt;!&ndash;<img src="http://eightbitavatar.herokuapp.com/?id={{user}}&s=female&size=400" />&ndash;&gt;
-                    <img scr=""/>
+    </div>-->
+    <div id="content-wrapper" ng-app="browseApp" ng-controller="browseCtrl" ng-init="loadUsers()">
+<!--        <a class="btn lower-card" ng-click="centerContent()">center card</a>
+        <a class="btn lower-card" ng-click="lowerCard()">lower card</a>
+        <a class="btn lower-card" ng-click="loadUsers()">load users</a>-->
+        <div id="content" ng-cloak>
+            <div id="users">
+                <div id="{{$last?'active':''}}" class="user card" ng-repeat="user in users" on-finish-render hm-pan="panCard($event)">
+                <!--<div id="active-card" class="user card">-->
+                    <span id="like">like</span>
+                    <span id="nope">nope</span>
+                    <div class="pic">
+                        <img src="concrete_seamless.png" />
+                    </div>
+                    <div class="info">
+                        <span>{{user.name}},</span>
+                        <span>{{user.age}}</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>-->
+    </div>
     <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>-->
     <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.4/hammer.min.js"></script>-->
-    <!--<script type="text/javascript" src="libraries/angular.min.js"></script>-->
+    <script type="text/javascript" src="libraries/angular.min.js"></script>
     <script type="text/javascript" src="libraries/hammer.min.js"></script>
+    <script type="text/javascript" src="libraries/angular.hammer.min.js"></script>
     <script type="text/javascript" src="index.js"></script>
     <script>
 

@@ -1,5 +1,12 @@
 {
   "name": "fullstack_coding_challenge",
+  "version": "1.0.0",
+  "description": "Tinder Full Stack Coding Challenge - Recreate the Tinder card stack",
+  "repository" :
+  {
+    "type" : "git",
+    "url" : "https://github.com/dan-b/fullstack_coding_challenge.git"
+  },
   "main": "server.js",
   "dependencies": {
     "express": "~4.0.0",

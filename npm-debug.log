@@ -1,0 +1,65 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'angular-hammer' ]
+2 info using npm@2.14.2
+3 info using node@v4.0.0
+4 verbose install initial load of C:\GitHub\fullstack_coding_challenge\package.json
+5 warn package.json fullstack_coding_challenge@1.0.0 No license field.
+6 verbose installManyTop reading scoped package data from C:\GitHub\fullstack_coding_challenge\node_modules\body-parser\package.json
+7 verbose installManyTop reading scoped package data from C:\GitHub\fullstack_coding_challenge\node_modules\express\package.json
+8 verbose readDependencies loading dependencies from C:\GitHub\fullstack_coding_challenge\package.json
+9 silly cache add args [ 'angular-hammer', null ]
+10 verbose cache add spec angular-hammer
+11 silly cache add parsed spec Result {
+11 silly cache add   raw: 'angular-hammer',
+11 silly cache add   scope: null,
+11 silly cache add   name: 'angular-hammer',
+11 silly cache add   rawSpec: '',
+11 silly cache add   spec: '*',
+11 silly cache add   type: 'range' }
+12 silly addNamed angular-hammer@*
+13 verbose addNamed "*" is a valid semver range for angular-hammer
+14 silly addNameRange { name: 'angular-hammer', range: '*', hasData: false }
+15 silly mapToRegistry name angular-hammer
+16 silly mapToRegistry using default registry
+17 silly mapToRegistry registry https://registry.npmjs.org/
+18 silly mapToRegistry uri https://registry.npmjs.org/angular-hammer
+19 verbose addNameRange registry:https://registry.npmjs.org/angular-hammer not in flight; fetching
+20 verbose request uri https://registry.npmjs.org/angular-hammer
+21 verbose request no auth needed
+22 info attempt registry request try #1 at 5:54:11 PM
+23 verbose request id 8583428d198035f6
+24 http request GET https://registry.npmjs.org/angular-hammer
+25 info retry will retry, error on last attempt: Error: tunneling socket could not be established, cause=connect ETIMEDOUT fd39:ec0d:499a:7777::1055:580a:8080
+26 info attempt registry request try #2 at 5:54:42 PM
+27 http request GET https://registry.npmjs.org/angular-hammer
+28 info retry will retry, error on last attempt: Error: tunneling socket could not be established, cause=connect ETIMEDOUT fd39:ec0d:499a:7777::1055:580a:8080
+29 info attempt registry request try #3 at 5:56:03 PM
+30 http request GET https://registry.npmjs.org/angular-hammer
+31 verbose stack Error: tunneling socket could not be established, cause=connect ETIMEDOUT fd39:ec0d:499a:7777::1055:580a:8080
+31 verbose stack     at ClientRequest.onError (C:\Program Files\nodejs\node_modules\npm\node_modules\request\node_modules\tunnel-agent\index.js:174:17)
+31 verbose stack     at ClientRequest.g (events.js:260:16)
+31 verbose stack     at emitOne (events.js:77:13)
+31 verbose stack     at ClientRequest.emit (events.js:169:7)
+31 verbose stack     at Socket.socketErrorListener (_http_client.js:259:9)
+31 verbose stack     at emitOne (events.js:77:13)
+31 verbose stack     at Socket.emit (events.js:169:7)
+31 verbose stack     at emitErrorNT (net.js:1250:8)
+31 verbose stack     at doNTCallback2 (node.js:429:9)
+31 verbose stack     at process._tickCallback (node.js:343:17)
+32 verbose cwd C:\GitHub\fullstack_coding_challenge
+33 error Windows_NT 6.3.9600
+34 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "angular-hammer"
+35 error node v4.0.0
+36 error npm  v2.14.2
+37 error code ECONNRESET
+38 error network tunneling socket could not be established, cause=connect ETIMEDOUT fd39:ec0d:499a:7777::1055:580a:8080
+38 error network This is most likely not a problem with npm itself
+38 error network and is related to network connectivity.
+38 error network In most cases you are behind a proxy or have bad network settings.
+38 error network
+38 error network If you are behind a proxy, please make sure that the
+38 error network 'proxy' config is set properly.  See: 'npm help config'
+39 verbose exit [ 1, true ]

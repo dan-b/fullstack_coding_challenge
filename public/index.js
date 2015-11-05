@@ -1,92 +1,74 @@
-/*var cards = angular.module('cardsApp', []);
-
-cards.controller('cardsCtrl', ['$scope', '$http', function ($scope, $http) {
+var browse = angular.module('browseApp', ['hmTouchEvents']);
+/*browse.config(function (hammerDefaultOptsProvider) {
+    hammerDefaultOptsProvider.set({
+        recognizers: [
+            [Hammer.Tap,{ event: 'tap'}],
+            [Hammer.Tap, { event: 'doubletap', taps: 2 }, [], ['tap']],
+            [Hammer.Press],
+            [Hammer.Pan]
+        ]
+    });
+});*/
+browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.users = [];
+    $scope.userIndex = 0;
+    $scope.userCount = 3;
     $scope.pos = {
         x: null,
         y: null
+    };
+    $scope.card = null;
+    $scope.content = null;
+    $scope.panCard = function (event) {
+        document.querySelector('#active.card').style.webkitTransform = ['translate3d(' + event.deltaX + 'px, ' + event.deltaY + 'px, 0)'];
+        console.log(JSON.stringify(event, null, 2));
     }
-    $scope.init = function () {
-        var myElement = document.getElementById('front-card');
-        var mc = new Hammer(myElement);
-        mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
-        //mc.on("panleft panright panup pandown", function(ev) {
-        mc.on("panend", function(ev) {
-            console.log(ev.type + " " + ev.deltaX);
-            $scope.pos.x = ev.deltaX;
-            $scope.pos.y = ev.deltaY;
-            var x = ev.deltaX + 'px';
-            var y = ev.deltaY + 'px';
-            $(myElement).transition({x:x, y:y});
-        });
-/!*        myData.forEach( function (item) {
-            $scope.data.push(item);
-        });*!/
+    $scope.loadUsers = function () {
+        $http.get('/api/users/' + $scope.userIndex + "/" + $scope.userCount).then(
+            function success (res) {
+                $scope.userIndex += $scope.userCount;
+                $scope.users = res.data;
+            },
+            function error (res) {
+                console.log("error res: " + JSON.stringify(res, null, 2))
+            });
     }
     $scope.swipe = function () {
     }
+    $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
+        $scope.card = document.querySelector(".active.card");
+        $scope.content = document.querySelector("#content");
+    });
 }]);
-var url = [
-    "http://eightbitavatar.herokuapp.com/?id=",
-    "&s=female&size=400"
-];
-
-(function () {
-
-})();*/
-
+browse.directive('onFinishRender', function ($timeout) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attr) {
+            if (scope.$last === true) {
+                $timeout(function () {
+                    scope.$emit('ngRepeatFinished');
+                });
+            }
+        }
+    }
+});
+/*var START_X = null;
+var START_Y = null;
+var ticking = false;
+var transform;
+var timer;
+function requestElementUpdate(el) {
+    if(!ticking) {
+        reqAnimationFrame(updateElementTransform(el));
+        ticking = true;
+    }
+}
 var reqAnimationFrame = (function () {
     return window[Hammer.prefixed(window, 'requestAnimationFrame')] || function (callback) {
             window.setTimeout(callback, 1000 / 60);
         };
 })();
-
-var el = document.querySelector("#active-card");
-
-var START_X = Math.round((window.innerWidth - el.offsetWidth) / 2);
-var START_Y = Math.round((window.innerHeight - el.offsetHeight) / 2);
-
-var ticking = false;
-var transform;
-var timer;
-
-var mc = new Hammer.Manager(el);
-
-mc.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
-
-mc.add(new Hammer.Swipe()).recognizeWith(mc.get('pan'));
-mc.add(new Hammer.Rotate({ threshold: 0 })).recognizeWith(mc.get('pan'));
-mc.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith([mc.get('pan'), mc.get('rotate')]);
-
-mc.add(new Hammer.Tap({ event: 'doubletap', taps: 2 }));
-mc.add(new Hammer.Tap());
-
-mc.on("panstart panmove", onPan);
-mc.on("swipe", onSwipe);
-mc.on("tap", onTap);
-
-mc.on("hammer.input", function(ev) {
-    if(ev.isFinal) {
-        resetElement();
-    }
-});
-
-
-function resetElement() {
-    el.className = 'animate';
-    transform = {
-        translate: { x: START_X, y: START_Y },
-        scale: 1,
-        angle: 0,
-        rx: 0,
-        ry: 0,
-        rz: 0
-    };
-
-    requestElementUpdate();
-}
-
-function updateElementTransform() {
+function updateElementTransform(el) {
     var value = [
         'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)',
         'scale(' + transform.scale + ', ' + transform.scale + ')',
@@ -98,54 +80,12 @@ function updateElementTransform() {
     el.style.mozTransform = value;
     el.style.transform = value;
     ticking = false;
-}
+}*/
+var url = [
+    "http://eightbitavatar.herokuapp.com/?id=",
+    "&s=female&size=400"
+];
 
-function requestElementUpdate() {
-    if(!ticking) {
-        reqAnimationFrame(updateElementTransform);
-        ticking = true;
-    }
-}
+(function () {
 
-function logEvent(str) {
-    console.log(str);
-}
-
-function onPan(ev) {
-    el.className = '';
-    transform.translate = {
-        x: START_X + ev.deltaX,
-        y: START_Y + ev.deltaY
-    };
-
-    requestElementUpdate();
-    logEvent(ev.type);
-}
-
-function onSwipe(ev) {
-    var angle = 50;
-    transform.ry = (ev.direction & Hammer.DIRECTION_HORIZONTAL) ? 1 : 0;
-    transform.rx = (ev.direction & Hammer.DIRECTION_VERTICAL) ? 1 : 0;
-    transform.angle = (ev.direction & (Hammer.DIRECTION_RIGHT | Hammer.DIRECTION_UP)) ? angle : -angle;
-
-    clearTimeout(timer);
-    timer = setTimeout(function () {
-        resetElement();
-    }, 300);
-    requestElementUpdate();
-    logEvent(ev.type);
-}
-
-function onTap(ev) {
-    transform.rx = 1;
-    transform.angle = 25;
-
-    clearTimeout(timer);
-    timer = setTimeout(function () {
-        resetElement();
-    }, 200);
-    requestElementUpdate();
-    logEvent(ev.type);
-}
-
-resetElement();
+})();
