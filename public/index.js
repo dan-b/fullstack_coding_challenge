@@ -17,11 +17,18 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
         x: null,
         y: null
     };
+    $scope.event = null;
     $scope.card = null;
     $scope.content = null;
-    $scope.panCard = function (event) {
-        document.querySelector('#active.card').style.webkitTransform = ['translate3d(' + event.deltaX + 'px, ' + event.deltaY + 'px, 0)'];
-        console.log(JSON.stringify(event, null, 2));
+    $scope.panCard = function (e) {
+        $scope.event = e;
+        requestElementUpdate( function () {
+            console.log("requestElementUpdate( function () )");
+            //console.log(JSON.stringify($scope.event, null, 2));
+            document.querySelector('#active.card').style.webkitTransform = ['translate3d(' + $scope.event.deltaX + 'px, ' + $scope.event.deltaY + 'px, 0)'];
+            ticking = false;
+        }, event);
+        //console.log(JSON.stringify(event, null, 2));
     }
     $scope.loadUsers = function () {
         $http.get('/api/users/' + $scope.userIndex + "/" + $scope.userCount).then(
@@ -52,14 +59,29 @@ browse.directive('onFinishRender', function ($timeout) {
         }
     }
 });
-/*var START_X = null;
-var START_Y = null;
+
 var ticking = false;
 var transform;
 var timer;
-function requestElementUpdate(el) {
+//var event;
+function requestElementUpdate(callback) {
+    console.log("requestElementUpdate");
     if(!ticking) {
-        reqAnimationFrame(updateElementTransform(el));
+        reqAnimationFrame(callback);
+        ticking = true;
+    }
+}
+var reqAnimationFrame = (function () {
+    console.log("reqAnimationFrame");
+    return window[Hammer.prefixed(window, 'requestAnimationFrame')] || function (callback) {
+            window.setTimeout(callback, 1000 / 60);
+        };
+})();
+/*
+// original
+function requestElementUpdate() {
+    if(!ticking) {
+        reqAnimationFrame(updateElementTransform);
         ticking = true;
     }
 }
@@ -68,7 +90,7 @@ var reqAnimationFrame = (function () {
             window.setTimeout(callback, 1000 / 60);
         };
 })();
-function updateElementTransform(el) {
+function updateElementTransform() {
     var value = [
         'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)',
         'scale(' + transform.scale + ', ' + transform.scale + ')',
@@ -81,11 +103,3 @@ function updateElementTransform(el) {
     el.style.transform = value;
     ticking = false;
 }*/
-var url = [
-    "http://eightbitavatar.herokuapp.com/?id=",
-    "&s=female&size=400"
-];
-
-(function () {
-
-})();
