@@ -10,25 +10,67 @@ var browse = angular.module('browseApp', ['hmTouchEvents']);
     });
 });*/
 browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
+    $scope.url = [
+        "http://eightbitavatar.herokuapp.com/?id=",
+        "&s=female&size=400"
+    ];
     $scope.users = [];
+    $scope.currentUser = null;
     $scope.userIndex = 0;
-    $scope.userCount = 3;
-    $scope.pos = {
+    $scope.userCount = 5;
+    $scope.center = {
         x: null,
         y: null
     };
+    $scope.opacityLeft = 0;
+    $scope.opacityRight = 0;
+    $scope.xThresholdLeft = null;
+    $scope.xThresholdRight = null;
+    $scope.cardIndex = 0;
+    $scope.cardStack = [];
     $scope.event = null;
     $scope.card = null;
     $scope.content = null;
-    $scope.panCard = function (e) {
-        $scope.event = e;
+    $scope.panCard = function (event) {
+        $scope.event = event;
         requestElementUpdate( function () {
-            console.log("requestElementUpdate( function () )");
+            var card = document.querySelector("#active.card");
+            var START_X = Math.round((window.innerWidth - card.offsetWidth) / 2) + $scope.event.deltaX;
+            var START_Y = Math.round((window.innerHeight - card.offsetHeight) / 2) + $scope.event.deltaY;
             //console.log(JSON.stringify($scope.event, null, 2));
-            document.querySelector('#active.card').style.webkitTransform = ['translate3d(' + $scope.event.deltaX + 'px, ' + $scope.event.deltaY + 'px, 0)'];
+            card.style.webkitTransform = ['translate3d(' + START_X + 'px, ' + START_Y + 'px, 0)'];
             ticking = false;
-        }, event);
+        });
+        $scope.opacityLeft = Math.round($scope.event.deltaX/$scope.xThresholdLeft*100)/100;
+        $scope.opacityRight = Math.round($scope.event.deltaX/$scope.xThresholdRight*100)/100;
         //console.log(JSON.stringify(event, null, 2));
+    }
+    $scope.panEnd = function (event) {
+        event.element[0].classList.add("animate");
+        window.setTimeout(function (card) {
+            var START_X = -card.offsetWidth;
+            var START_Y = Math.round((window.innerHeight - card.offsetHeight) / 2) + $scope.event.deltaY;
+            var value = ['translate3d(' + START_X + 'px, ' + START_Y + 'px, 0)'];
+            card.style.webkitTransform = value;
+            card.style.mozTransform = value;
+            card.style.transform = value;
+            $scope.users.pop();
+            $scope.currentUser = $scope.users[$scope.users.length-1];
+            console.log("users: " + JSON.stringify($scope.users, null, 2));
+        }, 50, event.element[0]);
+    }
+    $scope.resetActiveCard = function () {
+        var card = document.querySelector("#active.card");
+        var START_X = -card.offsetWidth;
+        var START_Y = Math.round((window.innerHeight - card.offsetHeight) / 2);
+        requestElementUpdate( function () {
+            card.classList.add("animate");
+            var value = ['translate3d(' + START_X + 'px, ' + START_Y + 'px, 0)'];
+            card.style.webkitTransform = value;
+            card.style.mozTransform = value;
+            card.style.transform = value;
+            ticking = false;
+        });
     }
     $scope.loadUsers = function () {
         $http.get('/api/users/' + $scope.userIndex + "/" + $scope.userCount).then(
@@ -40,11 +82,49 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
                 console.log("error res: " + JSON.stringify(res, null, 2))
             });
     }
-    $scope.swipe = function () {
+    $scope.moveCardsTopCenter = function () {
+        var cards = document.getElementsByClassName('card');
+        var START_X = Math.round((window.innerWidth - cards[0].offsetWidth) / 2);
+        var START_Y = Math.round( -cards[0].offsetHeight);
+        for (var i=0; i<cards.length; i++) {
+            $scope.cardStack.push(cards[i]);
+            cards[i].style.webkitTransform = ['translate3d(' + START_X + 'px, ' + START_Y + 'px, 0)'];
+        }
+    }
+    $scope.moveCardsCenter = function () {
+        var cards = document.getElementsByClassName('card');
+        var START_X = Math.round((window.innerWidth - cards[0].offsetWidth) / 2);
+        var START_Y = Math.round((window.innerHeight - cards[0].offsetHeight) / 2);
+        requestElementUpdate( function () {
+                var cards = document.getElementsByClassName('card');
+                for (var i = 0; i < cards.length; i++) {
+                    var el = cards[i];
+                    el.classList.add("animate");
+                    var value = ['translate3d(' + START_X + 'px, ' + START_Y + 'px, 0)'];
+                    el.style.webkitTransform = value;
+                    el.style.mozTransform = value;
+                    el.style.transform = value;
+                    el.style.transitionDelay = (i + 1) * .125 + "s";
+                    ticking = false;
+                }
+        });
+        window.setTimeout(function () {
+            var cards = document.getElementsByClassName('card');
+            for (var i = 0; i < cards.length; i++) {
+                cards[i].classList.remove("animate");
+                cards[i].style.transitionDelay = "0s";
+            }
+        }, 500);
     }
     $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
         $scope.card = document.querySelector(".active.card");
         $scope.content = document.querySelector("#content");
+        $scope.moveCardsTopCenter();
+        $scope.moveCardsCenter();
+        var card = document.querySelector("#active.card");
+        $scope.xThresholdLeft = Math.round(-card.offsetWidth/4);
+        $scope.xThresholdRight = Math.round(card.offsetWidth/4);
+        $scope.currentUser = $scope.users[$scope.users.length-1];
     });
 }]);
 browse.directive('onFinishRender', function ($timeout) {
@@ -59,7 +139,6 @@ browse.directive('onFinishRender', function ($timeout) {
         }
     }
 });
-
 var ticking = false;
 var transform;
 var timer;

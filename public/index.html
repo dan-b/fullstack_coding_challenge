@@ -22,18 +22,23 @@
         <a class="btn lower-card" ng-click="loadUsers()">load users</a>-->
         <div id="content" ng-cloak>
             <div id="users">
-                <div id="{{$last?'active':''}}" class="user card" ng-repeat="user in users" on-finish-render hm-pan="panCard($event)">
+                <div id="{{$last?'active':''}}" class="user card" ng-repeat="user in users" on-finish-render hm-pan="panCard($event)" hm-panend="panEnd($event)">
                 <!--<div id="active-card" class="user card">-->
-                    <span id="like">like</span>
-                    <span id="nope">nope</span>
-                    <div class="pic">
-                        <img src="concrete_seamless.png" />
+                    <span class="like" ng-style="{'opacity':opacityRight}" ng-show="{{user.name==currentUser.name}}">like</span>
+                    <span class="nope" ng-style="{'opacity':opacityLeft}" ng-show="{{user.name==currentUser.name}}">nope</span>
+                    <div class="profile-pic">
+                        <img ng-src="/images/profile-pics/{{$index}}.jpg" />
+                        <!--<img ng-src="http://eightbitavatar.herokuapp.com/?id={{user.name}}&s=female&size=400" />-->
                     </div>
                     <div class="info">
                         <span>{{user.name}},</span>
                         <span>{{user.age}}</span>
                     </div>
                 </div>
+                <a class="btn test-btn btn-left">{{opacityLeft}}</a>
+                <a class="btn test-btn btn-right">{{opacityRight}}</a>
+                <a class="btn test-btn" ng-click="resetActiveCard()">@</a>
+                <a class="btn test-btn">{{currentUser.name}}</a>
             </div>
         </div>
     </div>

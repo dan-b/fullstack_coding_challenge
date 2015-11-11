@@ -43,7 +43,7 @@ pre {
 #content {
     position: absolute;
 }
-.card>#like {
+.card>.like {
     position: absolute;
     left: 10%;
     top: 10%;
@@ -57,7 +57,7 @@ pre {
     font-weight: bolder;
     font-family: "Arial";
 }
-.card>#nope {
+.card>.nope {
     position: absolute;
     right: 10%;
     top: 10%;
@@ -71,8 +71,8 @@ pre {
     font-weight: bolder;
     font-family: "Arial";
 }
-#like, #nope {
-    opacity: .25;
+.like, .nope {
+    /*opacity: .25;*/
 }
 .card {
     position: absolute;
@@ -83,9 +83,15 @@ pre {
     border: 1px solid #ddd;
     border-radius: 5px;
 }
-.card>.pic {
+.card>.profile-pic {
     height: 90%;
     overflow: hidden;
+}
+.profile-pic>img {
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0 auto;
+    display: block;
 }
 .card>.info {
     width: 100%;
@@ -99,4 +105,16 @@ pre {
 }
 .lower-card {
 
+}
+.test-btn {
+    float: left;
+}
+.full-opacity {
+    opacity: 1;
+}
+.btn-left {
+    background-color: #82F1CC;
+}
+.btn-right {
+    background-color: #EBAA99;
 }
