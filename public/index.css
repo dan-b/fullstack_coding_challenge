@@ -76,6 +76,7 @@ pre {
 }
 .card {
     position: absolute;
+    /*background: #45B2FF;*/
     background: #fff;
     width: 300px;
     height: 300px;

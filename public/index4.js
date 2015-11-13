@@ -22,7 +22,6 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
         x: null,
         y: null
     };
-    $scope.isCardAnimate = false;
     $scope.opacityLeft = 0;
     $scope.opacityRight = 0;
     $scope.xThresholdLeft = null;
@@ -47,11 +46,20 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
         //console.log(JSON.stringify(event, null, 2));
     }
     $scope.panEnd = function (event) {
-        event.element[0].classList.add("animate");
-        window.setTimeout(function (card) {
+        var card = event.element[0];
+        card.classList.add("animate");
+        if (event.deltaX <= $scope.xThresholdLeft) {
             var START_X = -card.offsetWidth;
             var START_Y = Math.round((window.innerHeight - card.offsetHeight) / 2) + $scope.event.deltaY;
-            var value = ['translate3d(' + START_X + 'px, ' + START_Y + 'px, 0)'];
+        } else if (event.deltaX >= $scope.xThresholdRight) {
+            var START_X = window.innerWidth + card.offsetWidth;
+            var START_Y = Math.round((window.innerHeight - card.offsetHeight) / 2) + $scope.event.deltaY;
+        } else {
+            var START_X = Math.round((window.innerWidth - card.offsetWidth) / 2);
+            var START_Y = Math.round((window.innerHeight - card.offsetHeight) / 2);
+        }
+        var value = ['translate3d(' + START_X + 'px, ' + START_Y + 'px, 0)'];
+        window.setTimeout(function (card) {
             card.style.webkitTransform = value;
             card.style.mozTransform = value;
             card.style.transform = value;
@@ -83,7 +91,7 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
                 console.log("error res: " + JSON.stringify(res, null, 2))
             });
     }
-    $scope.moveCardsTopCenter = function (cb) {
+    $scope.moveCardsTopCenter = function () {
         var cards = document.getElementsByClassName('card');
         var START_X = Math.round((window.innerWidth - cards[0].offsetWidth) / 2);
         var START_Y = Math.round( -cards[0].offsetHeight);
@@ -91,36 +99,37 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
             $scope.cardStack.push(cards[i]);
             cards[i].style.webkitTransform = ['translate3d(' + START_X + 'px, ' + START_Y + 'px, 0)'];
         }
-        cb();
     }
     $scope.moveCardsCenter = function () {
         var cards = document.getElementsByClassName('card');
         var START_X = Math.round((window.innerWidth - cards[0].offsetWidth) / 2);
         var START_Y = Math.round((window.innerHeight - cards[0].offsetHeight) / 2);
-        var cards = document.getElementsByClassName('card');
-        for (var i = 0; i < cards.length; i++) {
-            var el = cards[i];
-            //el.classList.add("animate");
-            var value = ['translate3d(' + START_X + 'px, ' + START_Y + 'px, 0)'];
-            el.style.webkitTransform = value;
-            el.style.mozTransform = value;
-            el.style.transform = value;
-            el.style.transitionDelay = (i + 1) * .125 + "s";
-            ticking = false;
-        }
-/*        window.setTimeout(function () {
+        requestElementUpdate( function () {
+                var cards = document.getElementsByClassName('card');
+                for (var i = 0; i < cards.length; i++) {
+                    var el = cards[i];
+                    el.classList.add("animate");
+                    var value = ['translate3d(' + START_X + 'px, ' + START_Y + 'px, 0)'];
+                    el.style.webkitTransform = value;
+                    el.style.mozTransform = value;
+                    el.style.transform = value;
+                    el.style.transitionDelay = (i + 1) * .125 + "s";
+                    ticking = false;
+                }
+        });
+        window.setTimeout(function () {
             var cards = document.getElementsByClassName('card');
             for (var i = 0; i < cards.length; i++) {
                 cards[i].classList.remove("animate");
                 cards[i].style.transitionDelay = "0s";
             }
-        }, 500);*/
+        }, 500);
     }
     $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
-        $scope.moveCardsTopCenter(function () {
-            $scope.isCardAnimate = true;
-            $scope.moveCardsCenter();
-        });
+        $scope.card = document.querySelector(".active.card");
+        $scope.content = document.querySelector("#content");
+        $scope.moveCardsTopCenter();
+        $scope.moveCardsCenter();
         var card = document.querySelector("#active.card");
         $scope.xThresholdLeft = Math.round(-card.offsetWidth/4);
         $scope.xThresholdRight = Math.round(card.offsetWidth/4);

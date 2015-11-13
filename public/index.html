@@ -22,7 +22,7 @@
         <a class="btn lower-card" ng-click="loadUsers()">load users</a>-->
         <div id="content" ng-cloak>
             <div id="users">
-                <div id="{{$last?'active':''}}" class="user card" ng-repeat="user in users" on-finish-render hm-pan="panCard($event)" hm-panend="panEnd($event)">
+                <div id="{{$last?'active':''}}" class="user card" ng-class="isCardAnimate?'animate':''" ng-repeat="user in users" on-finish-render hm-pan="panCard($event)" hm-panend="panEnd($event)">
                 <!--<div id="active-card" class="user card">-->
                     <span class="like" ng-style="{'opacity':opacityRight}" ng-show="{{user.name==currentUser.name}}">like</span>
                     <span class="nope" ng-style="{'opacity':opacityLeft}" ng-show="{{user.name==currentUser.name}}">nope</span>
@@ -38,7 +38,7 @@
                 <a class="btn test-btn btn-left">{{opacityLeft}}</a>
                 <a class="btn test-btn btn-right">{{opacityRight}}</a>
                 <a class="btn test-btn" ng-click="resetActiveCard()">@</a>
-                <a class="btn test-btn">{{currentUser.name}}</a>
+                <a class="btn test-btn">{{isCardAnimate?'animate':'-'}}</a>
             </div>
         </div>
     </div>
@@ -47,7 +47,7 @@
     <script type="text/javascript" src="libraries/angular.min.js"></script>
     <script type="text/javascript" src="libraries/hammer.min.js"></script>
     <script type="text/javascript" src="libraries/angular.hammer.min.js"></script>
-    <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="index4.js"></script>
     <script>
 
     </script>
