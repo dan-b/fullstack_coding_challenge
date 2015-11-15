@@ -90,7 +90,7 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
     }
     $scope.swipeLeft = function (event, user) {
         $scope.swipe = "left";
-        var card = event.element[0];
+/*        var card = event.element[0];
         card.classList.add("animate");
         var START_X = -card.offsetWidth;
         var START_Y = Math.round((window.innerHeight - card.offsetHeight) / 2) + $scope.event.deltaY;
@@ -101,7 +101,7 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
             card.style.mozTransform = value;
             card.style.transform = value;
             $scope.nopeUser(user);
-        }, 50, event.element[0]);
+        }, 50, event.element[0]);*/
     }
     $scope.swipeRight = function (event, user) {
         $scope.swipe = "right";
