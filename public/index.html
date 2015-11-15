@@ -16,13 +16,13 @@
             <span id="c-y"></span>
         </div>
     </div>-->
-    <div id="content-wrapper" ng-app="browseApp" ng-controller="browseCtrl" ng-init="loadUsers()">
+    <div id="content-wrapper" ng-app="browseApp" ng-controller="browseCtrl" ng-init="loadUsers()" hm-swipeleft="swipeLeft($event, user)" hm-swiperight="swipeRight($event, user)">
 <!--        <a class="btn lower-card" ng-click="centerContent()">center card</a>
         <a class="btn lower-card" ng-click="lowerCard()">lower card</a>
         <a class="btn lower-card" ng-click="loadUsers()">load users</a>-->
         <div id="content" ng-cloak>
             <div id="users">
-                <div id="{{$last?'active':''}}" class="user card" ng-class="isCardAnimate?'animate':''" ng-repeat="user in users" on-finish-render hm-pan="panCard($event)" hm-panend="panEnd($event, user)" hm-swipeleft="swipeLeft($event, user)" hm-swiperight="swipeRight($event, user)">
+                <div id="{{$last?'active':''}}" class="user card" ng-class="isCardAnimate?'animate':''" ng-repeat="user in users" on-finish-render hm-pan="panCard($event)" hm-panend="panEnd($event, user)">
                 <!--<div id="active-card" class="user card">-->
                     <span class="like {{user.name!=currentUser.name?'hidden':''}}" ng-style="{'opacity':opacityRight}">like</span>
                     <span class="nope {{user.name!=currentUser.name?'hidden':''}}" ng-style="{'opacity':opacityLeft}">nope</span>
