@@ -161,8 +161,8 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
         $scope.moveCardsTopCenter();
         $scope.moveCardsCenter();
         var card = document.querySelector("#active.card");
-        $scope.xThresholdLeft = Math.round(-card.offsetWidth/3);
-        $scope.xThresholdRight = Math.round(card.offsetWidth/3);
+        $scope.xThresholdLeft = Math.round(-card.offsetWidth/4);
+        $scope.xThresholdRight = Math.round(card.offsetWidth/4);
         $scope.currentUser = $scope.users[$scope.users.length-1];
     });
 }]);
