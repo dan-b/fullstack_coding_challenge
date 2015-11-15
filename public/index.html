@@ -22,12 +22,12 @@
         <a class="btn lower-card" ng-click="loadUsers()">load users</a>-->
         <div id="content" ng-cloak>
             <div id="users">
-                <div id="{{$last?'active':''}}" class="user card" ng-class="isCardAnimate?'animate':''" ng-repeat="user in users" on-finish-render hm-pan="panCard($event)" hm-panend="panEnd($event)">
+                <div id="{{$last?'active':''}}" class="user card" ng-class="isCardAnimate?'animate':''" ng-repeat="user in users" on-finish-render hm-pan="panCard($event)" hm-panend="panEnd($event, user)" hm-swipeleft="swipeLeft($event, user)" hm-swiperight="swipeRight($event, user)">
                 <!--<div id="active-card" class="user card">-->
-                    <span class="like" ng-style="{'opacity':opacityRight}" ng-show="{{user.name==currentUser.name}}">like</span>
-                    <span class="nope" ng-style="{'opacity':opacityLeft}" ng-show="{{user.name==currentUser.name}}">nope</span>
+                    <span class="like {{user.name!=currentUser.name?'hidden':''}}" ng-style="{'opacity':opacityRight}">like</span>
+                    <span class="nope {{user.name!=currentUser.name?'hidden':''}}" ng-style="{'opacity':opacityLeft}">nope</span>
                     <div class="profile-pic">
-                        <img ng-src="/images/profile-pics/{{$index}}.jpg" />
+                        <img ng-src="/images/profile-pics/{{user.img}}.jpg" />
                         <!--<img ng-src="http://eightbitavatar.herokuapp.com/?id={{user.name}}&s=female&size=400" />-->
                     </div>
                     <div class="info">
@@ -35,10 +35,7 @@
                         <span>{{user.age}}</span>
                     </div>
                 </div>
-                <a class="btn test-btn btn-left">{{opacityLeft}}</a>
-                <a class="btn test-btn btn-right">{{opacityRight}}</a>
-                <a class="btn test-btn" ng-click="resetActiveCard()">@</a>
-                <a class="btn test-btn">{{isCardAnimate?'animate':'-'}}</a>
+                <a class="btn test-btn">Swipe: {{swipe}}</a>
             </div>
         </div>
     </div>

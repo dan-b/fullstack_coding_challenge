@@ -1,3 +1,7 @@
+@font-face {
+    font-family: ArialRounded;
+    src: url(fonts/Arial%20Rounded%20MT%20Bold%20Bold.ttf);
+}
 @import url(http://fonts.googleapis.com/css?family=Open+Sans);
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
@@ -97,6 +101,17 @@ pre {
 .card>.info {
     width: 100%;
     background: #fff;
+    font-size: 1.5em;
+    margin-left: 15px;
+    color: #555;
+    font-family: 'ArialRounded';
+    height: 42px;
+    bottom: 0;
+    position: fixed;
+}
+.info>span {
+    margin-top: .5em;
+    display: inline-block;
 }
 .btn {
     border: 1px solid #4986e7;
@@ -118,4 +133,7 @@ pre {
 }
 .btn-right {
     background-color: #EBAA99;
+}
+.hidden {
+    visibility: hidden;
 }
