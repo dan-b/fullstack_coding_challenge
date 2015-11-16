@@ -48,12 +48,12 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
     }
     $scope.likeUser = function (user) {
         $scope.likedUser = user;
-        var img = document.querySelector(".matched-user>img");
-        img.src="/images/profile-pics/" + $scope.likedUser.img + ".jpg";    // angular not updating ng-src of image
+        //var img = document.querySelector(".matched-user>img");
+        //img.src="/images/profile-pics/" + $scope.likedUser.img + ".jpg";    // angular not updating ng-src of image
         document.querySelector("#meet-me-modal").classList.add("active");
-        document.querySelector("body").classList.add("modal-open");
-        var name = document.querySelector('.liked-user');   // angular not updating until touch event
-        name.innerText = user.name;
+        //document.querySelector("body").classList.add("modal-open");
+        //var name = document.querySelector('.liked-user');   // angular not updating until touch event
+        //name.innerText = user.name;
     }
     $scope.nopeUser = function (user) {
         $scope.popUser();
@@ -62,7 +62,7 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.hideMeetMeModal = function () {
         $scope.opacityRight = 0;
         document.querySelector("#meet-me-modal").classList.remove("active");
-        document.querySelector("body").classList.add("modal-open");
+        //document.querySelector("body").classList.add("modal-open");
         $scope.popUser();
         $scope.currentUser = $scope.users[$scope.users.length-1];
     }
