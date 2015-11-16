@@ -51,7 +51,7 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
         var img = document.querySelector(".matched-user>img");
         img.src="/images/profile-pics/" + $scope.likedUser.img + ".jpg";    // angular not updating ng-src of image
         document.querySelector("#meet-me-modal").classList.add("active");
-var name = document.querySelector('.liked-user');   // angular not updating until touch event
+        var name = document.querySelector('.liked-user');   // angular not updating until touch event
         name.innerText = user.name;
     }
     $scope.nopeUser = function (user) {
@@ -96,24 +96,6 @@ var name = document.querySelector('.liked-user');   // angular not updating unti
                 }, 300, card);
             }
         }, 50, event.element[0], user);
-    }
-    $scope.swipeLeft = function (event, user) {
-        $scope.swipe = "left";
-/*        var card = event.element[0];
-        card.classList.add("animate");
-        var START_X = -card.offsetWidth;
-        var START_Y = Math.round((window.innerHeight - card.offsetHeight) / 2) + $scope.event.deltaY;
-        var nope = true;
-        var value = ['translate3d(' + START_X + 'px, ' + START_Y + 'px, 0)'];
-        window.setTimeout(function (card) {
-            card.style.webkitTransform = value;
-            card.style.mozTransform = value;
-            card.style.transform = value;
-            $scope.nopeUser(user);
-        }, 50, event.element[0]);*/
-    }
-    $scope.swipeRight = function (event, user) {
-        $scope.swipe = "right";
     }
     $scope.resetActiveCard = function (card) {
         card.classList.remove("animate");
