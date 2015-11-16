@@ -17,9 +17,33 @@
         </div>
     </div>-->
     <div id="content-wrapper" ng-app="browseApp" ng-controller="browseCtrl" ng-init="loadUsers()" hm-swipeleft="swipeLeft($event, user)" hm-swiperight="swipeRight($event, user)">
-<!--        <a class="btn lower-card" ng-click="centerContent()">center card</a>
-        <a class="btn lower-card" ng-click="lowerCard()">lower card</a>
-        <a class="btn lower-card" ng-click="loadUsers()">load users</a>-->
+        <div id="meet-me-modal">
+            <div class="heading">
+                <span>It's a Match!</span>
+            </div>
+            <div class="description">
+                <span>You and {{currentUser.name}} have liked each other.</span>
+            </div>
+            <div id="icons">
+                <div class="user">
+                    <img src="images/nedry.jpg" />
+                </div>
+                <div class="matched-user">
+                    <img ng-src="/images/profile-pics/{{currentUser.img}}.jpg" />
+                </div>
+            </div>
+            <div class="footer">
+                <div>
+                    <a class="btn">Send a Message</a>
+                </div>
+                <div>
+                    <a class="btn" ng-click="hideMeetMeModal()">Keep Playing</a>
+                </div>
+                <div>
+                    <a class="link">Tell your friends</a>
+                </div>
+            </div>
+        </div>
         <div id="content" ng-cloak>
             <div id="users">
                 <div id="{{$last?'active':''}}" class="user card" ng-class="isCardAnimate?'animate':''" ng-repeat="user in users" on-finish-render hm-pan="panCard($event)" hm-panend="panEnd($event, user)">
@@ -35,7 +59,7 @@
                         <span>{{user.age}}</span>
                     </div>
                 </div>
-                <a class="btn test-btn">Swipe: {{swipe}}</a>
+                <a class="btn test-btn">{{currentUser.name}}</a>
             </div>
         </div>
     </div>
