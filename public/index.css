@@ -118,7 +118,7 @@ pre {
     width: 300px;
     height: 300px;
     padding: 0;
-    border: 1px solid #ddd;
+    border: 1px solid #f0f0f0;
     border-radius: 5px;
 }
 .card>.profile-pic {
