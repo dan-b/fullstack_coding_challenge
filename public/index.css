@@ -24,7 +24,6 @@
 }
 body {
     overflow: hidden !important;
-    position: static !important;
 }
 html, body {
     margin: 0;
