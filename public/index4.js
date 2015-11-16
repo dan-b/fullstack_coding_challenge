@@ -49,8 +49,6 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
     }
     $scope.likeUser = function (user) {
         document.querySelector("#meet-me-modal").classList.add("active");
-        $scope.popUser();
-        $scope.currentUser = $scope.users[$scope.users.length-1];
     }
     $scope.nopeUser = function (user) {
         $scope.popUser();
@@ -58,7 +56,8 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
     }
     $scope.hideMeetMeModal = function () {
         document.querySelector("#meet-me-modal").classList.remove("active");
-
+        $scope.popUser();
+        $scope.currentUser = $scope.users[$scope.users.length-1];
     }
     $scope.panEnd = function (event, user) {
         var card = event.element[0];

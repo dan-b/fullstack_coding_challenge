@@ -2,6 +2,18 @@
     font-family: ArialRounded;
     src: url(fonts/Arial%20Rounded%20MT%20Bold%20Bold.ttf);
 }
+@font-face {
+    font-family: ChaletNewYork;
+    src: url(fonts/ChaletLondonNineteenSeventy.ttf);
+}
+@font-face {
+    font-family: HelveticaNeue;
+    src: url(fonts/HelveticaNeue.ttf);
+}
+@font-face {
+    font-family: HipsterScriptPro;
+    src: url(fonts/HipsterScriptPro.otf);
+}
 @import url(http://fonts.googleapis.com/css?family=Open+Sans);
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
@@ -45,6 +57,7 @@ html, body {
     display: inline-block;
     padding: 6px 0 3px;
     margin-bottom: -3px;
+    font-family: 'ChaletNewYork';
 }
 #navbar .messages {
     font-size: 24px;
@@ -198,7 +211,7 @@ pre {
     text-align: center;
     font-size: 4em;
     color: #fff;
-    font-family: 'ArialRound';
+    font-family: 'HipsterScriptPro';
     padding-top: 1em;
     display: inline-table;
     width: 100%;
@@ -207,8 +220,7 @@ pre {
     text-align: center;
     font-size: 18px;
     color: #fff;
-    font-family: Arial;
-    padding-top: 1em;
+    font-family: 'HelveticaNeue';
 }
 #meet-me-modal>#icons {
     text-align: center;
@@ -256,7 +268,7 @@ pre {
     color: #fff;
     font-size: 1.25em;
     margin: 10px auto 20px;
-    font-family: sans-serif;
+    font-family: 'HelveticaNeue';
 }
 #buttons {
     position: fixed;
