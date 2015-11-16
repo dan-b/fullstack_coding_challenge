@@ -5,19 +5,26 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
     <title>Tinder Full Stack Coding Challenge</title>
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="libraries/bootstrap.min.css">
 </head>
 <body>
-<!--    <div id="active-card">
-        <div class="profile-pic">
-            <img src="concrete_seamless.png" />
+    <div id="navbar">
+        <div class="hamburger">
+            <span class="glyphicon glyphicon-menu-hamburger"></span>
         </div>
-        <div class="profile-info">
-            <span id="c-x"></span>
-            <span id="c-y"></span>
+        <span class="pipe">&#124;</span>
+        <div class="logo">
+            <span>tinder</span>
         </div>
-    </div>-->
+        <div class="messages">
+            <span class="glyphicon glyphicon-comment"></span>
+        </div>
+        <div class="heart">
+            <span class="glyphicon glyphicon-heart-empty"></span>
+        </div>
+    </div>
     <div id="content-wrapper" ng-app="browseApp" ng-controller="browseCtrl" ng-init="loadUsers()" hm-swipeleft="swipeLeft($event, user)" hm-swiperight="swipeRight($event, user)">
-        <div id="meet-me-modal">
+        <div id="meet-me-modal" ng-click="hideMeetMeModal()">
             <div class="heading">
                 <span>It's a Match!</span>
             </div>
@@ -37,7 +44,7 @@
                     <a class="btn">Send a Message</a>
                 </div>
                 <div>
-                    <a class="btn" ng-click="hideMeetMeModal()">Keep Playing</a>
+                    <a class="btn">Keep Playing</a>
                 </div>
                 <div>
                     <a class="link">Tell your friends</a>
@@ -59,8 +66,22 @@
                         <span>{{user.age}}</span>
                     </div>
                 </div>
-                <a class="btn test-btn">{{currentUser.name}}</a>
+                <a class="test-btn">{{currentUser.name}}</a>
             </div>
+        </div>
+    </div>
+    <div id="buttons">
+        <div class="btn-rewind">
+            <span class="glyphicon glyphicon-repeat"></span>
+        </div>
+        <div class="btn-nope">
+            <span class="glyphicon glyphicon-remove"></span>
+        </div>
+        <div class="btn-like">
+            <span class="glyphicon glyphicon-heart"></span>
+        </div>
+        <div class="btn-superlike">
+            <span class="glyphicon glyphicon-star"></span>
         </div>
     </div>
     <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>-->

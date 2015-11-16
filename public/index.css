@@ -19,6 +19,39 @@ html, body {
     font: 13px/1.5em 'Open Sans', Helvetica, Arial, sans-serif;
     overflow: hidden;
 }
+#navbar {
+    border-bottom: 3px solid #f0f0f0;
+    position: fixed;
+    width: 100%;
+}
+#navbar>div {
+    display: inline-block;
+    color: #ccc;
+    margin-right: 5px;
+}
+#navbar .pipe {
+    font-size: 30px;
+    color: #ccc;
+}
+#navbar .hamburger {
+    font-size: 20px;
+    margin-left: -3px;
+}
+#navbar .logo {
+    color: #EE6C49;
+    font-size: 28px;
+    font-weight: bold;
+    border-bottom: 3px solid;
+    display: inline-block;
+    padding: 6px 0 3px;
+    margin-bottom: -3px;
+}
+#navbar .messages {
+    font-size: 24px;
+}
+#navbar .heart {
+    font-size: 24px;
+}
 a {
     color: #4986e7;
 }
@@ -127,7 +160,8 @@ pre {
 
 }
 .test-btn {
-    float: left;
+    float: right;
+    display: none;
 }
 .full-opacity {
     opacity: 1;
@@ -223,4 +257,48 @@ pre {
     font-size: 1.25em;
     margin: 10px auto 20px;
     font-family: sans-serif;
+}
+#buttons {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+    padding-bottom: 10px;
+}
+#buttons>div {
+    display: inline-block;
+    margin: 0 -6px;
+}
+.btn-rewind, .btn-superlike {
+    vertical-align: top;
+}
+.btn-rewind>span {
+    color: #FFCE65;
+    font-size: 26px;
+    border: 8px solid #F1F1F1;
+    border-radius: 100%;
+    padding: 16px;
+    vertical-align: bottom;
+}
+.btn-nope>span {
+    color: #EE6C49;
+    font-size: 40px;
+    border: 8px solid #F1F1F1;
+    border-radius: 100%;
+    padding: 24px;
+}
+.btn-like>span {
+    color: #63DE9A;
+    font-size: 40px;
+    border: 8px solid #F1F1F1;
+    border-radius: 100%;
+    padding: 24px;
+}
+.btn-superlike>span {
+    color: #2DB3C9;
+    font-size: 26px;
+    border: 8px solid #F1F1F1;
+    border-radius: 100%;
+    padding: 16px;
+    vertical-align: bottom;
 }
