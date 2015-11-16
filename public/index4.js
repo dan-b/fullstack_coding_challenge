@@ -19,7 +19,6 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
         x: null,
         y: null
     };
-    $scope.likedUser = null;
     $scope.opacityLeft = 0;
     $scope.opacityRight = 0;
     $scope.xThresholdLeft = null;
@@ -40,26 +39,22 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
             var card = document.querySelector("#active.card");
             var START_X = Math.round((window.innerWidth - card.offsetWidth) / 2) + $scope.event.deltaX;
             var START_Y = Math.round((window.innerHeight - card.offsetHeight) / 2) + $scope.event.deltaY;
+            //console.log(JSON.stringify($scope.event, null, 2));
             card.style.webkitTransform = ['translate3d(' + START_X + 'px, ' + START_Y + 'px, 0)'];
             ticking = false;
         });
         $scope.opacityLeft = Math.round($scope.event.deltaX/$scope.xThresholdLeft*100)/100;
         $scope.opacityRight = Math.round($scope.event.deltaX/$scope.xThresholdRight*100)/100;
+        //console.log(JSON.stringify(event, null, 2));
     }
     $scope.likeUser = function (user) {
-        $scope.likedUser = user;
-        var img = document.querySelector(".matched-user>img");
-        img.src="/images/profile-pics/" + $scope.likedUser.img + ".jpg";    // angular not updating ng-src of image
         document.querySelector("#meet-me-modal").classList.add("active");
-        var name = document.querySelector('.liked-user');   // angular not updating until touch event
-        name.innerText = user.name;
     }
     $scope.nopeUser = function (user) {
         $scope.popUser();
         $scope.currentUser = $scope.users[$scope.users.length-1];
     }
     $scope.hideMeetMeModal = function () {
-        $scope.opacityRight = 0;
         document.querySelector("#meet-me-modal").classList.remove("active");
         $scope.popUser();
         $scope.currentUser = $scope.users[$scope.users.length-1];
@@ -80,7 +75,7 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
             var START_Y = Math.round((window.innerHeight - card.offsetHeight) / 2);
         }
         var value = ['translate3d(' + START_X + 'px, ' + START_Y + 'px, 0)'];
-        window.setTimeout(function (card, user) {
+        window.setTimeout(function (card) {
             card.style.webkitTransform = value;
             card.style.mozTransform = value;
             card.style.transform = value;
@@ -95,7 +90,7 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
                     $scope.resetActiveCard(card);
                 }, 300, card);
             }
-        }, 50, event.element[0], user);
+        }, 50, event.element[0]);
     }
     $scope.swipeLeft = function (event, user) {
         $scope.swipe = "left";
@@ -192,12 +187,14 @@ var transform;
 var timer;
 //var event;
 function requestElementUpdate(callback) {
+    console.log("requestElementUpdate");
     if(!ticking) {
         reqAnimationFrame(callback);
         ticking = true;
     }
 }
 var reqAnimationFrame = (function () {
+    console.log("reqAnimationFrame");
     return window[Hammer.prefixed(window, 'requestAnimationFrame')] || function (callback) {
             window.setTimeout(callback, 1000 / 60);
         };

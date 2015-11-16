@@ -10,16 +10,19 @@ var browse = angular.module('browseApp', ['hmTouchEvents']);
     });
 });*/
 browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
+    $scope.url = [
+        "http://eightbitavatar.herokuapp.com/?id=",
+        "&s=female&size=400"
+    ];
     $scope.users = [];
     $scope.currentUser = null;
-    $scope.swipe = null;
     $scope.userIndex = 0;
     $scope.userCount = 5;
     $scope.center = {
         x: null,
         y: null
     };
-    $scope.likedUser = null;
+    $scope.isCardAnimate = false;
     $scope.opacityLeft = 0;
     $scope.opacityRight = 0;
     $scope.xThresholdLeft = null;
@@ -29,92 +32,58 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.event = null;
     $scope.card = null;
     $scope.content = null;
-    $scope.popUser = function () {
-        $scope.users.pop();
-        if ($scope.users.length == 0)
-            $scope.loadUsers();
-    }
     $scope.panCard = function (event) {
         $scope.event = event;
         requestElementUpdate( function () {
             var card = document.querySelector("#active.card");
             var START_X = Math.round((window.innerWidth - card.offsetWidth) / 2) + $scope.event.deltaX;
             var START_Y = Math.round((window.innerHeight - card.offsetHeight) / 2) + $scope.event.deltaY;
+            //console.log(JSON.stringify($scope.event, null, 2));
             card.style.webkitTransform = ['translate3d(' + START_X + 'px, ' + START_Y + 'px, 0)'];
             ticking = false;
         });
         $scope.opacityLeft = Math.round($scope.event.deltaX/$scope.xThresholdLeft*100)/100;
         $scope.opacityRight = Math.round($scope.event.deltaX/$scope.xThresholdRight*100)/100;
+        //console.log(JSON.stringify(event, null, 2));
     }
-    $scope.likeUser = function (user) {
-        $scope.likedUser = user;
-        //var img = document.querySelector(".matched-user>img");
-        //img.src="/images/profile-pics/" + $scope.likedUser.img + ".jpg";    // angular not updating ng-src of image
-        document.querySelector("#meet-me-modal").classList.add("active");
-        //document.querySelector("body").classList.add("modal-open");
-        //var name = document.querySelector('.liked-user');   // angular not updating until touch event
-        //name.innerText = user.name;
-    }
-    $scope.nopeUser = function (user) {
-        $scope.popUser();
-        $scope.currentUser = $scope.users[$scope.users.length-1];
-    }
-    $scope.hideMeetMeModal = function () {
-        $scope.opacityRight = 0;
-        document.querySelector("#meet-me-modal").classList.remove("active");
-        //document.querySelector("body").classList.add("modal-open");
-        $scope.popUser();
-        $scope.currentUser = $scope.users[$scope.users.length-1];
-    }
-    $scope.panEnd = function (event, user) {
-        var card = event.element[0];
-        card.classList.add("animate");
-        if (event.deltaX <= $scope.xThresholdLeft) {
+    $scope.panEnd = function (event) {
+        event.element[0].classList.add("animate");
+        window.setTimeout(function (card) {
             var START_X = -card.offsetWidth;
             var START_Y = Math.round((window.innerHeight - card.offsetHeight) / 2) + $scope.event.deltaY;
-            var nope = true;
-        } else if (event.deltaX >= $scope.xThresholdRight) {
-            var START_X = window.innerWidth + card.offsetWidth;
-            var START_Y = Math.round((window.innerHeight - card.offsetHeight) / 2) + $scope.event.deltaY;
-            var like = true;
-        } else {
-            var START_X = Math.round((window.innerWidth - card.offsetWidth) / 2);
-            var START_Y = Math.round((window.innerHeight - card.offsetHeight) / 2);
-        }
-        var value = ['translate3d(' + START_X + 'px, ' + START_Y + 'px, 0)'];
-        window.setTimeout(function (card, user) {
+            var value = ['translate3d(' + START_X + 'px, ' + START_Y + 'px, 0)'];
             card.style.webkitTransform = value;
             card.style.mozTransform = value;
             card.style.transform = value;
-            if (nope)
-                $scope.nopeUser(user);
-            else if (like)
-                $scope.likeUser(user);
-            else {
-                document.querySelector('#active>.like').style.opacity = 0;
-                document.querySelector('#active>.nope').style.opacity = 0;
-                window.setTimeout(function (card) {
-                    $scope.resetActiveCard(card);
-                }, 300, card);
-            }
-        }, 50, event.element[0], user);
+            $scope.users.pop();
+            $scope.currentUser = $scope.users[$scope.users.length-1];
+            console.log("users: " + JSON.stringify($scope.users, null, 2));
+        }, 50, event.element[0]);
     }
-    $scope.resetActiveCard = function (card) {
-        card.classList.remove("animate");
+    $scope.resetActiveCard = function () {
+        var card = document.querySelector("#active.card");
+        var START_X = -card.offsetWidth;
+        var START_Y = Math.round((window.innerHeight - card.offsetHeight) / 2);
+        requestElementUpdate( function () {
+            card.classList.add("animate");
+            var value = ['translate3d(' + START_X + 'px, ' + START_Y + 'px, 0)'];
+            card.style.webkitTransform = value;
+            card.style.mozTransform = value;
+            card.style.transform = value;
+            ticking = false;
+        });
     }
     $scope.loadUsers = function () {
         $http.get('/api/users/' + $scope.userIndex + "/" + $scope.userCount).then(
             function success (res) {
                 $scope.userIndex += $scope.userCount;
                 $scope.users = res.data;
-                $scope.opacityLeft = 0;
-                $scope.opacityRight = 0;
             },
             function error (res) {
                 console.log("error res: " + JSON.stringify(res, null, 2))
             });
     }
-    $scope.moveCardsTopCenter = function () {
+    $scope.moveCardsTopCenter = function (cb) {
         var cards = document.getElementsByClassName('card');
         var START_X = Math.round((window.innerWidth - cards[0].offsetWidth) / 2);
         var START_Y = Math.round( -cards[0].offsetHeight);
@@ -122,43 +91,40 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
             $scope.cardStack.push(cards[i]);
             cards[i].style.webkitTransform = ['translate3d(' + START_X + 'px, ' + START_Y + 'px, 0)'];
         }
+        cb();
     }
     $scope.moveCardsCenter = function () {
         var cards = document.getElementsByClassName('card');
         var START_X = Math.round((window.innerWidth - cards[0].offsetWidth) / 2);
         var START_Y = Math.round((window.innerHeight - cards[0].offsetHeight) / 2);
-        requestElementUpdate( function () {
-            var cards = document.getElementsByClassName('card');
-            for (var i = 0; i < cards.length; i++) {
-                var el = cards[i];
-                el.classList.add("animate");
-                var value = ['translate3d(' + START_X + 'px, ' + START_Y + 'px, 0)'];
-                el.style.webkitTransform = value;
-                el.style.mozTransform = value;
-                el.style.transform = value;
-                el.style.transitionDelay = (i + 1) * .125 + "s";
-                ticking = false;
-            }
-        });
-        window.setTimeout(function () {
+        var cards = document.getElementsByClassName('card');
+        for (var i = 0; i < cards.length; i++) {
+            var el = cards[i];
+            //el.classList.add("animate");
+            var value = ['translate3d(' + START_X + 'px, ' + START_Y + 'px, 0)'];
+            el.style.webkitTransform = value;
+            el.style.mozTransform = value;
+            el.style.transform = value;
+            el.style.transitionDelay = (i + 1) * .125 + "s";
+            ticking = false;
+        }
+/*        window.setTimeout(function () {
             var cards = document.getElementsByClassName('card');
             for (var i = 0; i < cards.length; i++) {
                 cards[i].classList.remove("animate");
                 cards[i].style.transitionDelay = "0s";
             }
-        }, 500);
+        }, 500);*/
     }
     $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
-        $scope.card = document.querySelector(".active.card");
-        $scope.content = document.querySelector("#content");
-        $scope.moveCardsTopCenter();
-        $scope.moveCardsCenter();
+        $scope.moveCardsTopCenter(function () {
+            $scope.isCardAnimate = true;
+            $scope.moveCardsCenter();
+        });
         var card = document.querySelector("#active.card");
         $scope.xThresholdLeft = Math.round(-card.offsetWidth/4);
         $scope.xThresholdRight = Math.round(card.offsetWidth/4);
         $scope.currentUser = $scope.users[$scope.users.length-1];
-        var modal = document.querySelector("#meet-me-modal");
-        modal.style.width = window.innerWidth + "px";
     });
 }]);
 browse.directive('onFinishRender', function ($timeout) {
@@ -178,12 +144,14 @@ var transform;
 var timer;
 //var event;
 function requestElementUpdate(callback) {
+    console.log("requestElementUpdate");
     if(!ticking) {
         reqAnimationFrame(callback);
         ticking = true;
     }
 }
 var reqAnimationFrame = (function () {
+    console.log("reqAnimationFrame");
     return window[Hammer.prefixed(window, 'requestAnimationFrame')] || function (callback) {
             window.setTimeout(callback, 1000 / 60);
         };

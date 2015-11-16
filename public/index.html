@@ -28,14 +28,14 @@
                 <span>It's a Match!</span>
             </div>
             <div class="description">
-                <span>You and <span class="liked-user"></span> have liked each other.</span>
+                <span>You and {{currentUser.name}} have liked each other.</span>
             </div>
             <div id="icons">
                 <div class="user">
                     <img src="images/nedry.jpg" />
                 </div>
                 <div class="matched-user">
-                    <img ng-src="/images/profile-pics/{{likedUser.img}}.jpg" />
+                    <img ng-src="/images/profile-pics/{{currentUser.img}}.jpg" />
                 </div>
             </div>
             <div class="footer">
@@ -52,7 +52,7 @@
         </div>
         <div id="content" ng-cloak>
             <div id="users">
-                <div id="{{$last?'active':''}}" class="user card" ng-class="isCardAnimate?'animate':''" ng-repeat="user in users" on-finish-render hm-pan="panCard($event, user)" hm-panend="panEnd($event, user)">
+                <div id="{{$last?'active':''}}" class="user card" ng-class="isCardAnimate?'animate':''" ng-repeat="user in users" on-finish-render hm-pan="panCard($event)" hm-panend="panEnd($event, user)">
                 <!--<div id="active-card" class="user card">-->
                     <span class="like {{user.name!=currentUser.name?'hidden':''}}" ng-style="{'opacity':opacityRight}">like</span>
                     <span class="nope {{user.name!=currentUser.name?'hidden':''}}" ng-style="{'opacity':opacityLeft}">nope</span>
@@ -88,7 +88,7 @@
     <script type="text/javascript" src="libraries/angular.min.js"></script>
     <script type="text/javascript" src="libraries/hammer.min.js"></script>
     <script type="text/javascript" src="libraries/angular.hammer.min.js"></script>
-    <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="index4.js"></script>
     <script>
 
     </script>
