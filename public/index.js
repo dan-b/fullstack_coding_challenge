@@ -174,7 +174,7 @@ var name = document.querySelector('.liked-user');   // angular not updating unti
         $scope.xThresholdRight = Math.round(card.offsetWidth/4);
         $scope.currentUser = $scope.users[$scope.users.length-1];
         var modal = document.querySelector("#meet-me-modal");
-        modal.style.width = window.innerWidth;
+        modal.style.width = window.innerWidth + "px";
     });
 }]);
 browse.directive('onFinishRender', function ($timeout) {
