@@ -206,6 +206,7 @@ pre {
 #meet-me-modal.active {
     opacity:1;
     pointer-events: auto;
+    overflow: hidden;
 }
 #meet-me-modal>.heading {
     text-align: center;
