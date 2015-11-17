@@ -45,6 +45,7 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
         var body = document.querySelector("body");
         body.style.width = window.innerWidth + "px";
         body.style.height = window.innerHeight + "px";
+        body.style.overflow = "hidden";
         $scope.opacityRight = 0;
         $scope.$apply();
     }

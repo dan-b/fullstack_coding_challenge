@@ -289,28 +289,28 @@ pre {
     font-size: 26px;
     border: 8px solid #F1F1F1;
     border-radius: 100%;
-    padding: 16px;
+    padding: 12px;
     vertical-align: bottom;
 }
 .btn-nope>span {
     color: #EE6C49;
-    font-size: 40px;
+    font-size: 36px;
     border: 8px solid #F1F1F1;
     border-radius: 100%;
-    padding: 24px;
+    padding: 18px;
 }
 .btn-like>span {
     color: #63DE9A;
-    font-size: 40px;
+    font-size: 36px;
     border: 8px solid #F1F1F1;
     border-radius: 100%;
-    padding: 24px;
+    padding: 18px;
 }
 .btn-superlike>span {
     color: #2DB3C9;
     font-size: 26px;
     border: 8px solid #F1F1F1;
     border-radius: 100%;
-    padding: 16px;
+    padding: 12px;
     vertical-align: bottom;
 }
