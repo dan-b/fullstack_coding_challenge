@@ -42,6 +42,9 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
         modal.classList.add("active");
         modal.style.width = window.innerWidth + "px";
         modal.style.height = window.innerHeight + "px";
+        var body = document.querySelector("body");
+        body.style.width = window.innerWidth + "px";
+        body.style.height = window.innerHeight + "px";
         $scope.opacityRight = 0;
         $scope.$apply();
     }
