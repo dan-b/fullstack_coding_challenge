@@ -38,13 +38,12 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
     }
     $scope.likeUser = function (user) {
         $scope.likedUser = user;
-        document.querySelector("#meet-me-modal").classList.add("active");
+        var modal = document.querySelector("#meet-me-modal");
+        modal.classList.add("active");
+        modal.style.width = window.innerWidth + "px";
+        modal.style.height = window.innerHeight + "px";
         $scope.opacityRight = 0;
-        var styleBefore = document.querySelector("body").style;
         $scope.$apply();
-        var styleAfter = document.querySelector("body").style;
-        var areStylesEqual = (styleBefore!=styleAfter);
-        alert("Has style of body changed after $apply? " + areStylesEqual);
     }
     $scope.nopeUser = function (user) {
         $scope.popUser();
