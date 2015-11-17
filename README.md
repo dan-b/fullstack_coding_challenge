@@ -1,3 +1,9 @@
+Demo: https://fullstack-coding-challenge-danb1.c9users.io/
+
+My attempt at the Tinder Full Stack Coding Challenge to recreate the main screen.
+I used AngularJS, HammerJS, https://github.com/RyanMullins/angular-hammer, and Bootstrap.
+
+
 Tinder Full Stack Coding Challenge
 ===================================
 
