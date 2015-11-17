@@ -1,4 +1,5 @@
 Demo: https://fullstack-coding-challenge-danb1.c9users.io/
+Best viewed on a mobile device. Tested on Nexus5 and iPhone6.
 
 My attempt at the Tinder Full Stack Coding Challenge to recreate the main screen.
 I used AngularJS, HammerJS, https://github.com/RyanMullins/angular-hammer, and Bootstrap.
