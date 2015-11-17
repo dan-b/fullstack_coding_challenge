@@ -22,10 +22,6 @@
     box-sizing: border-box;
     -moz-box-sizing: border-box;
 }
-body {
-    overflow: hidden;
-    position: fixed;
-}
 html, body {
     margin: 0;
     padding: 0;
@@ -136,7 +132,7 @@ pre {
     padding: 0;
     border: 1px solid #f0f0f0;
     border-radius: 5px;
-    z-index: 1;
+    z-index: 2;
 }
 .card>.profile-pic {
     height: 90%;
@@ -280,7 +276,7 @@ pre {
     bottom: 0;
     text-align: center;
     padding-bottom: 10px;
-    z-index: -1;
+    z-index: 1;
 }
 #buttons>div {
     display: inline-block;
