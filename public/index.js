@@ -40,11 +40,11 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
         $scope.likedUser = user;
         document.querySelector("#meet-me-modal").classList.add("active");
         $scope.opacityRight = 0;
-        var styleBefore = document.querySelector("#meet-me-modal").style;
+        var styleBefore = document.querySelector("body").style;
         $scope.$apply();
-        var styleAfter = document.querySelector("#meet-me-modal").style;
+        var styleAfter = document.querySelector("body").style;
         var areStylesEqual = (styleBefore!=styleAfter);
-        alert("Has style of modal changed after $apply? " + areStylesEqual);
+        alert("Has style of body changed after $apply? " + areStylesEqual);
     }
     $scope.nopeUser = function (user) {
         $scope.popUser();
