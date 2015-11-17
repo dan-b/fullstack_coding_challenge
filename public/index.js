@@ -40,13 +40,13 @@ browse.controller('browseCtrl', ['$scope', '$http', function ($scope, $http) {
         $scope.likedUser = user;
         var modal = document.querySelector("#meet-me-modal");
         modal.classList.add("active");
-        modal.style.width = window.innerWidth + "px";
+/*        modal.style.width = window.innerWidth + "px";
         modal.style.height = window.innerHeight + "px";
         var body = document.querySelector("body");
         body.style.width = window.innerWidth + "px";
         body.style.height = window.innerHeight + "px";
         body.style.overflow = "hidden";
-        body.style.position = "fixed";
+        body.style.position = "fixed";*/
         $scope.opacityRight = 0;
         $scope.$apply();
     }
