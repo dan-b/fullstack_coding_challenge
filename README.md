@@ -1,4 +1,4 @@
-### Demo: https://fullstack-coding-challenge-danb1.c9users.io/
+### Demo: https://tinder-challenge.herokuapp.com/
 
 Best viewed on a mobile device. Tested on Nexus5 and iPhone6.
 
